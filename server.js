@@ -100,7 +100,7 @@ udpServer.on('message', async (msg, rinfo) => {
 });
 
 udpServer.bind(udpPort, () => {
-  console.log('Servidor UDP escuchando en el puerto '${udpPort});
+  console.log('Servidor UDP escuchando en el puerto ${udpPort}');
 });
 
 app.use(bodyParser.json());
@@ -116,5 +116,5 @@ server.on('upgrade', (request, socket, head) => {
 });
 
 server.listen(port, () => {
-  console.log('Servidor web en http://54.221.22.143:'${port});
+  console.log('Servidor web en http://54.221.22.143: ${port}');
 });
