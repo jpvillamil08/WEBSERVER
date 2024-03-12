@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Server</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    #map {
+      height: 400px;
+    }
+
+    .moving-truck {
+      color: black; /* Cambia el color según tus preferencias */
+    }
+  </style>
+</head>
+<body>
+  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+    <div class="Title">
+      <h1>WEB SERVER</h1>
+      <i class="fas fa-truck-moving moving-truck"></i>
+    </div>
+  </div>
+  <div id="map"></div>
+  <div id="data-container"></div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    const socket = new WebSocket('ws://100.24.161.99:80');
+    const map = L.map('map').setView([0, 0], 15); // Ajusta el nivel de zoom inicial
+
+    // Utiliza un ícono de camión en movimiento con colores personalizados para el marcador
+    const movingTruckIcon = L.divIcon({
+      className: 'moving-truck-icon',
+      html: '<i class="fas fa-truck-moving moving-truck"></i>',
+      iconSize: [30, 30],
+      iconAnchor: [15, 30]
+    });
+
+    const marker = L.marker([0, 0], { icon: movingTruckIcon }).addTo(map);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '©️ OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Agrega un efecto de rebote (bounce) al marcador después de agregarlo al mapa
+    marker.on('add', () => {
+      marker.bounce({ duration: 500, height: 50 });
+    });
+
+    socket.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      const dataContainer = document.getElementById('data-container');
+      dataContainer.innerHTML = `<p>Latitud: ${data.latitud}</p>
+                                 <p>Longitud: ${data.longitud}</p>
+                                 <p>Fecha: ${data.fecha}</p>
+                                 <p>Altitud: ${data.altitud}</p>`;
+
+      marker.setLatLng([data.latitud, data.longitud])
+        .bindPopup(Fecha: ${data.fecha}<br>Timestamp: ${data.timestamp})
+        .openPopup();
+
+      // Ajusta la vista del mapa para centrarse en el nuevo marcador
+      map.setView([data.latitud, data.longitud]);
+    };
+  </script>
+</body>
+</html>
