@@ -13,9 +13,9 @@ const port = 80;
 const udpPort = 7002;
 
 const dbConfig = {
-  host: 'joao-db.cr4y8g2qc9gb.us-east-1.rds.amazonaws.com',
+  host: 'database-1.c9ycgu6g4n48.us-east-1.rds.amazonaws.com',
   user: 'admin',
-  password: '12345678',
+  password: 'loco1515',
   database: 'db',
   port: 3306,
 };
@@ -100,7 +100,7 @@ udpServer.on('message', async (msg, rinfo) => {
 });
 
 udpServer.bind(udpPort, () => {
-  console.log('Servidor UDP escuchando en el puerto ${udpPort}');
+  console.log('Servidor UDP escuchando en el puerto 7002');
 });
 
 app.use(bodyParser.json());
@@ -115,6 +115,6 @@ server.on('upgrade', (request, socket, head) => {
   });
 });
 
-server.listen(port, () => {
+server.listen(port, (port) => {
   console.log('Servidor web en http://54.221.22.143: ${port}');
 });
