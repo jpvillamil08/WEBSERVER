@@ -16,7 +16,7 @@ const dbConfig = {
   host: 'database-1.c9ycgu6g4n48.us-east-1.rds.amazonaws.com',
   user: 'admin',
   password: 'loco1515',
-  database: 'db',
+  database: 'database-1',
   port: 3306,
 };
 
